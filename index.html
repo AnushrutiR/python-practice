@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #A8DFC8;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .phone {
+            background-color: #A8DFC8;
+            width: 390px;
+            min-height: 844px;
+            border-radius: 40px;
+            overflow: hidden;
+            padding-bottom: 40px;
+        }
+
+        .header {
+            background-color: #7DC9A8;
+            border-radius: 24px;
+            margin: 16px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 32px;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: white;
+            opacity: 0.8;
+            font-style: italic;
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin: 16px;
+            gap: 8px;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 16px;
+            border-radius: 16px;
+            border: none;
+            background: #C5EFE0;
+            font-size: 16px;
+            color: #888;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .add-btn {
+            background: #7DC9A8;
+            border: none;
+            border-radius: 16px;
+            width: 56px;
+            height: 56px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .task-list {
+            margin: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-card {
+            background: #C5EFE0;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info .date {
+            font-size: 11px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .task-info .task-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2D2D2D;
+            margin: 2px 0;
+        }
+
+        .task-info .time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .done-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: #A8DFC8;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .done-btn.completed {
+            background: #7DC9A8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone">
+        <div class="header">
+            <h1>✦ MY TASKS ✦</h1>
+            <p>what's on your mind?</p>
+        </div>
+
+        <div class="input-row">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button class="add-btn" onclick="addTask()">+</button>
+        </div>
+
+        <div class="task-list" id="taskList">
+            <div class="task-card">
+                <div class="task-info">
+                    <div class="date">Sunday, 8 June</div>
+                    <div class="task-name">Buy groceries</div>
+                    <div class="time">Today</div>
+                </div>
+                <button class="done-btn" onclick="toggleDone(this)"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+            if (input.value.trim() === '') return;
+
+            const today = new Date().toLocaleDateString('en-GB', {
+                weekday: 'long', day: 'numeric', month: 'long'
+            });
+
+            const card = document.createElement('div');
+            card.className = 'task-card';
+            card.innerHTML = `
+                <div class="task-info">
+                    <div class="date">${today}</div>
+                    <div class="task-name">${input.value}</div>
+                    <div class="time">Today</div>
+                </div>
+                <button class="done-btn" onclick="toggleDone(this)"></button>
+            `;
+            taskList.appendChild(card);
+            input.value = '';
+        }
+
+        function toggleDone(btn) {
+            btn.classList.toggle('completed');
+            btn.textContent = btn.classList.contains('completed') ? '✓' : '';
+            const taskName = btn.closest('.task-card').querySelector('.task-name');
+            taskName.style.textDecoration = btn.classList.contains('completed') ? 'line-through' : 'none';
+            taskName.style.opacity = btn.classList.contains('completed') ? '0.5' : '1';
+        }
+    </script>
+</body>
+</html>
