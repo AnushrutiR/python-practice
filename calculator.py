@@ -13,9 +13,13 @@ def multiply():
     print(m)
     print("Numbers multiplied successfully")
 def division():
-    d=n1/n2
-    print(d)
-    print("Numbers divided successfully")
+    def division():
+    if n2 == 0:
+        print("Can't divide by zero!")
+    else:
+        d = n1 / n2
+        print(d)
+        print("Numbers divided successfully")
 while True:
      print("\n1. Add numbers")
      print("2. Subtract numbers")
